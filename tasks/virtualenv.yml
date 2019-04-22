@@ -25,6 +25,15 @@
     value: m
   when: ansible_kernel.endswith('grsec')
 
+- name: Install elasticsearch into virtualenv
+  pip:
+    name: elasticsearch
+    version: "{{ elasticsearch_version }}"
+    virtualenv: "{{ elastalert_venv_rootdir }}/venv"
+  become_user: "{{ elastalert_user }}"
+  become: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: Install elastalert into virtualenv
   pip:
     name: elastalert
